@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Niks Blog CMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: white;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-input::placeholder {
+            color: transparent;
+        }
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .form-input:focus::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+        .admin-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0;
+            transition: var(--transition);
+        }
+        .admin-toggle:hover {
+            color: var(--accent);
+        }
+        .admin-toggle.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        #adminPanel {
+            display: none;
+        }
+        #adminPanel.visible {
+            display: block;
+        }
+        .user-only {
+            display: block;
+        }
+        body.admin-mode .user-only {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <div class="auth-container glass-card animate-fade">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <a href="../index.html" class="logo" style="font-size: 2rem;">Niks CMS</a>
+        </div>
+
+        <form id="loginForm" autocomplete="off">
+            <div class="form-group user-field">
+                <label for="email" id="emailLabel">Email</label>
+                <input type="email" id="email" class="form-input" name="email" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-input" name="password" required autocomplete="new-password">
+            </div>
+
+            <div class="user-only" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary);">
+                    <input type="checkbox" id="rememberMe"> Remember me
+                </label>
+                <a href="forgot-password.html" style="color: var(--accent);">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%; justify-content: center; padding: 1rem;">
+                Sign In <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="auth-divider">
+            <button type="button" class="admin-toggle" id="adminToggle" aria-expanded="false">
+                Are you an admin?
+            </button>
+        </div>
+
+        <div id="adminPanel">
+            <button type="button" class="btn btn-primary" id="adminSubmitBtn" style="width: 100%; justify-content: center; padding: 1rem;">
+                <i class="fas fa-shield-alt"></i> Admin Sign In
+            </button>
+            <button type="button" class="admin-toggle" id="backToUserBtn" style="width: 100%; margin-top: 1rem; text-align: center;">
+                Back to user sign in
+            </button>
+        </div>
+
+        <div class="user-only" style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">
+            Don't have an account? <a href="register.html" style="color: var(--accent); font-weight: 600;">Sign up</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="../index.html" style="color: var(--text-secondary); font-size: 0.9rem;">
+                <i class="fas fa-home"></i> Back to Website
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { isValidEmail } from '../js/common.js';
+        import { state } from '../js/state.js';
+
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const rememberCheckbox = document.getElementById('rememberMe');
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const adminToggle = document.getElementById('adminToggle');
+        const adminPanel = document.getElementById('adminPanel');
+        const adminSubmitBtn = document.getElementById('adminSubmitBtn');
+        const backToUserBtn = document.getElementById('backToUserBtn');
+        const emailLabel = document.getElementById('emailLabel');
+
+        let adminMode = false;
+
+        emailInput.value = '';
+        passwordInput.value = '';
+
+        if (state.isAuthenticated()) {
+            window.location.href = state.getDashboardPath(true);
+        }
+
+        function setAdminMode(on) {
+            adminMode = on;
+            document.body.classList.toggle('admin-mode', on);
+            adminPanel.classList.toggle('visible', on);
+            adminToggle.classList.toggle('active', on);
+            adminToggle.setAttribute('aria-expanded', on ? 'true' : 'false');
+            adminToggle.textContent = on ? 'Administrator sign in' : 'Are you an admin?';
+            emailLabel.textContent = on ? 'Admin email' : 'Email';
+            submitBtn.style.display = on ? 'none' : 'flex';
+        }
+
+        adminToggle.addEventListener('click', () => setAdminMode(!adminMode));
+        backToUserBtn.addEventListener('click', () => setAdminMode(false));
+
+        function redirectAfterLogin(user) {
+            if (user.role === 'admin' || state.isAdmin()) {
+                window.location.href = '../admin/dashboard.html';
+                return;
+            }
+            if (rememberCheckbox.checked) {
+                localStorage.setItem('niks_remember_email', emailInput.value.trim());
+            } else {
+                localStorage.removeItem('niks_remember_email');
+            }
+            window.location.href = '../user/dashboard.html';
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (adminMode) {
+                adminSubmitBtn.click();
+                return;
+            }
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            const user = state.login(email, password);
+            if (user) {
+                redirectAfterLogin(user);
+            } else {
+                alert('Invalid email or password. Please try again or sign up.');
+            }
+        });
+
+        adminSubmitBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email || !password) {
+                alert('Please enter your admin email and password.');
+                return;
+            }
+
+            const user = state.login(email, password);
+            if (user && state.isAdmin()) {
+                window.location.href = '../admin/dashboard.html';
+            } else {
+                alert('Invalid administrator credentials.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Niks Blog CMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="dashboard-app admin-dashboard" data-theme="dark">
+    <aside class="sidebar">
+        <div class="logo" style="margin-bottom: 1rem;">Niks CMS</div>
+        <span class="role-badge">Administrator</span>
+        <nav style="flex: 1; margin-top: 1.5rem;">
+            <a href="#" class="sidebar-tab active" data-tab="overview">
+                <i class="fas fa-chart-line"></i> Overview
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="posts">
+                <i class="fas fa-file-alt"></i> All Stories
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="users">
+                <i class="fas fa-users"></i> All Users
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="comments">
+                <i class="fas fa-comments"></i> Comments
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+        <div style="border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+            <a href="../index.html" class="sidebar-link sidebar-link-website">
+                <i class="fas fa-home"></i> Main Website
+            </a>
+            <a href="../blog.html" class="sidebar-link">
+                <i class="fas fa-compass"></i> Browse Stories
+            </a>
+            <button type="button" class="sidebar-link" id="logoutBtn" style="color: #ef4444;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 id="tabTitle">Admin Overview</h1>
+                <p style="color: var(--text-secondary);">Platform-wide management and analytics.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="../index.html" class="btn btn-glass" id="backToWebsiteBtn">
+                    <i class="fas fa-home"></i> Main Website
+                </a>
+                <button class="btn btn-primary" id="createNewPost">
+                    <i class="fas fa-plus"></i> Create Story
+                </button>
+            </div>
+        </header>
+
+        <!-- Overview -->
+        <div id="tab-overview" class="tab-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Total Views</p>
+                    <div class="stat-val" id="statViews">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Published Stories</p>
+                    <div class="stat-val" id="statPosts">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Registered Users</p>
+                    <div class="stat-val" id="statUsers">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Total Likes</p>
+                    <div class="stat-val" id="statLikes">0</div>
+                </div>
+            </div>
+
+            <h2>Recent Activity</h2>
+            <div class="glass-panel" style="margin-top: 1rem;" id="recentActivityList"></div>
+        </div>
+
+        <!-- All Stories -->
+        <div id="tab-posts" class="tab-content" style="display: none;">
+            <div class="glass-panel">
+                <div class="post-row" style="font-weight: 600; background: var(--glass-bg);">
+                    <div>Image</div>
+                    <div>Title</div>
+                    <div>Category</div>
+                    <div>Date</div>
+                    <div>Actions</div>
+                </div>
+                <div id="postsList"></div>
+            </div>
+        </div>
+
+        <!-- Users -->
+        <div id="tab-users" class="tab-content" style="display: none;">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                All registered accounts on the platform (excluding passwords).
+            </p>
+            <div class="glass-panel">
+                <div class="user-table-header">
+                    <div>User</div>
+                    <div>Email</div>
+                    <div>Role</div>
+                    <div>Stories</div>
+                    <div>User ID</div>
+                </div>
+                <div id="usersList"></div>
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div id="tab-comments" class="tab-content" style="display: none;">
+            <div class="glass-panel" id="commentsList"></div>
+        </div>
+
+        <!-- Settings -->
+        <div id="tab-settings" class="tab-content" style="display: none;">
+            <div class="glass-panel" style="padding: 2rem; max-width: 560px;">
+                <h3 style="margin-bottom: 1rem;">Platform Settings</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.7;">
+                    Site data is stored locally in this demo. Categories and default content can be reset from the browser console.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Site Name</label>
+                        <input type="text" value="Niks Blog CMS" readonly
+                               style="width: 100%; margin-top: 0.5rem; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white;">
+                    </div>
+                    <div>
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Categories</label>
+                        <p id="settingsCategories" style="margin-top: 0.5rem; color: var(--text-primary);"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Post Editor Modal -->
+    <div class="modal" id="editorModal">
+        <div class="modal-content">
+            <div style="padding: 1rem 2rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <input type="text" id="editTitle" placeholder="Story Title"
+                       style="background: transparent; border: none; font-size: 1.5rem; font-weight: 700; color: white; width: 60%; min-width: 200px;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select id="editCategory" style="padding: 0.5rem; border-radius: 4px; background: var(--bg-dark); color: white;">
+                        <option>Technology</option>
+                        <option>Design</option>
+                        <option>Development</option>
+                        <option>Lifestyle</option>
+                        <option>Business</option>
+                    </select>
+                    <button class="btn btn-glass" id="closeEditor">Cancel</button>
+                    <button class="btn btn-primary" id="savePost">Save & Publish</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <textarea class="editor-textarea" id="markdownInput" placeholder="Write your story in markdown..."></textarea>
+                <div class="editor-preview post-content" id="markdownPreview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

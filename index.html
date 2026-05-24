@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niks Blog CMS | Modern Publishing Platform</title>
+    <meta name="description" content="Niks Blog CMS - A professional modern blogging platform for developers and creators.">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="gradient-bg">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">Niks Blog CMS</a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="blog.html" class="nav-link">Explore</a>
+                <a href="auth/register.html" class="nav-link">Sign Up</a>
+                <button class="btn btn-glass" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="auth/login.html" class="btn btn-primary">Login</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="page-hero">
+        <div class="container">
+            <div class="animate-fade">
+                <span class="badge">Professional Publishing Platform</span>
+                <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); margin-top: 1rem;">
+                    Stories that <span class="text-accent">inspire</span><br>the digital world.
+                </h1>
+                <p class="text-muted" style="font-size: 1.2rem; max-width: 620px; margin-bottom: 2rem; line-height: 1.7;">
+                    Niks Blog CMS brings together thoughtful writing on technology, design, development, and culture — built for readers and creators who care about quality.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="blog.html" class="btn btn-primary"><i class="fas fa-book-open"></i> Start Reading</a>
+                    <a href="auth/register.html" class="btn btn-glass"><i class="fas fa-user-plus"></i> Create Free Account</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container" style="margin-top: -20px; position: relative; z-index: 10;">
+        <div class="glass-panel search-bar">
+            <i class="fas fa-search text-muted"></i>
+            <input type="search" id="mainSearch" placeholder="Search articles, topics, or authors…" aria-label="Search articles">
+            <button type="button" class="btn btn-primary">Search</button>
+        </div>
+    </section>
+
+    <section class="container" style="margin-top: 3rem;">
+        <div class="glass-panel" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; padding: 2.5rem;">
+            <div class="stat-block">
+                <div class="stat-number text-accent" id="statPosts">—</div>
+                <div class="stat-label">Published Stories</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number" style="color: var(--primary);" id="statAuthors">—</div>
+                <div class="stat-label">Contributors</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number text-accent" id="statReaders">—</div>
+                <div class="stat-label">Community Readers</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-number" style="color: var(--primary);" id="statViews">—</div>
+                <div class="stat-label">Total Article Views</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="padding-top: 60px; padding-bottom: 40px;">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-left: auto; margin-right: auto;">
+                <h2>Browse by <span class="text-accent">Category</span></h2>
+                <p style="margin: 0 auto;">Find articles tailored to your interests — from AI and engineering to design and lifestyle.</p>
+            </div>
+            <div class="category-pills" id="categoryPills"></div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section id="featured" class="section-padding">
+        <div class="container">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2>Recent <span class="text-accent">Highlights</span></h2>
+                    <p class="text-muted">Hand-picked stories from our editorial team.</p>
+                </div>
+                <a href="blog.html" class="nav-link">View all stories <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="blog-grid" id="featuredGrid">
+                <!-- Blog cards will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Editor's <span class="text-accent">Picks</span></h2>
+                <p class="text-muted">The most-read articles from our community this week.</p>
+            </div>
+            <div class="blog-grid" id="editorsPicksGrid"></div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: rgba(124, 58, 237, 0.03);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 3rem;">Built for <span style="color: var(--primary);">Performance</span></h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Everything you need to build a professional publication. Beautiful, fast, and feature-rich.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-glow); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--primary);">
+                        <i class="fas fa-bolt fa-lg"></i>
+                    </div>
+                    <h3>Lightning Fast</h3>
+                    <p style="color: var(--text-secondary);">Optimized for Core Web Vitals to ensure your readers have the best experience possible.</p>
+                </div>
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="width: 50px; height: 50px; background: var(--accent); opacity: 0.8; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: white;">
+                        <i class="fas fa-code fa-lg"></i>
+                    </div>
+                    <h3>Markdown Driven</h3>
+                    <p style="color: var(--text-secondary);">Write in the language you already know. Simple, clean, and developer-friendly publishing.</p>
+                </div>
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="width: 50px; height: 50px; background: #06B6D433; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--accent);">
+                        <i class="fas fa-mobile-alt fa-lg"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p style="color: var(--text-secondary);">Automatically adapts to any device, ensuring your stories look great everywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Authors -->
+    <section class="section-padding">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Top <span style="color: var(--accent);">Contributors</span></h2>
+            <div id="authorsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <!-- Authors will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-padding" style="background: rgba(6, 182, 212, 0.03);">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 4rem;">What Our <span style="color: var(--accent);">Readers Say</span></h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-quote-left fa-2x"></i></div>
+                    <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem;">"The cleanest interface I've ever used. Niks Blog CMS makes reading and writing a joy. The glassmorphism design is simply stunning."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary);"></div>
+                        <div>
+                            <div style="font-weight: 600;">David Miller</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Tech Journalist</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- More Testimonials -->
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-quote-left fa-2x"></i></div>
+                    <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem;">"As a developer, I love the Markdown support and code highlighting. It's the perfect platform for my technical tutorials."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent);"></div>
+                        <div>
+                            <div style="font-weight: 600;">Elena Rodriguez</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Fullstack Engineer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <div style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-quote-left fa-2x"></i></div>
+                    <p style="font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem;">"Switching to Niks Blog increased our engagement by 40%. The typography and layout are optimized for reading."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: #FFF;"></div>
+                        <div>
+                            <div style="font-weight: 600;">Marcus Thorne</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Content Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <h2 style="font-size: 3rem;">Ready to <span style="color: var(--primary);">Level Up?</span></h2>
+                <p style="color: var(--text-secondary);">Choose the plan that fits your creative needs.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+                <div class="glass-card" style="padding: 3rem; text-align: center; border: 1px solid var(--glass-border);">
+                    <h3 style="margin-bottom: 1rem;">Freelancer</h3>
+                    <div style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">$0 <span style="font-size: 1rem; color: var(--text-secondary);">/mo</span></div>
+                    <ul style="text-align: left; margin-bottom: 2rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><i class="fas fa-check color-accent" style="color: var(--accent);"></i> Unlimited Reading</li>
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> Standard Markdown Editor</li>
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> 5 Stories Per Month</li>
+                        <li style="opacity: 0.5;"><i class="fas fa-times"></i> Custom Domains</li>
+                    </ul>
+                    <button class="btn btn-glass" style="width: 100%; justify-content: center;">Get Started</button>
+                </div>
+                <div class="glass-card" style="padding: 3rem; text-align: center; border: 2px solid var(--primary);">
+                    <span class="badge" style="position: absolute; top: 1.5rem; right: 1.5rem;">Most Popular</span>
+                    <h3 style="margin-bottom: 1rem;">Professional</h3>
+                    <div style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">$12 <span style="font-size: 1rem; color: var(--text-secondary);">/mo</span></div>
+                    <ul style="text-align: left; margin-bottom: 2rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem;">
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> Everything in Free</li>
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> Unlimited Stories</li>
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> Custom Domain Support</li>
+                        <li><i class="fas fa-check" style="color: var(--accent);"></i> Advanced Analytics</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center;">Go Pro Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-padding" style="background: rgba(124, 58, 237, 0.02);">
+        <div class="container" style="max-width: 800px;">
+            <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 4rem;">Frequently Asked <span style="color: var(--accent);">Questions</span></h2>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <details class="glass-panel" style="padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Can I export my content? <i class="fas fa-chevron-down"></i>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Yes! You can export your stories in Markdown, PDF, or HTML format at any time from your dashboard.</p>
+                </details>
+                <details class="glass-panel" style="padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Is there a mobile app? <i class="fas fa-chevron-down"></i>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">While we don't have a native app yet, our platform is a Progressive Web App (PWA) that works perfectly on any mobile browser.</p>
+                </details>
+                <details class="glass-panel" style="padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 600; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Do you offer student discounts? <i class="fas fa-chevron-down"></i>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Absolutely! Students with a valid .edu email can get 50% off any paid plan. Contact support for your code.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="glass-panel" style="padding: 5rem 2rem; text-align: center; border: 2px solid var(--primary-glow);">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Never miss a story</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 500px; margin-inline: auto;">Join our weekly digest and get the most read stories directly to your inbox. No spam, ever.</p>
+                <form id="newsletterForm" style="max-width: 500px; margin: 0 auto; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <input type="email" placeholder="you@example.com" required
+                           style="flex: 1; min-width: 250px; padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white;">
+                    <button type="submit" class="btn btn-primary" style="padding-inline: 2.5rem;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Footer -->
+    <footer style="background: var(--bg-dark-soft); padding: 100px 0 50px 0; border-top: 1px solid var(--glass-border);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; margin-bottom: 80px;">
+                <div style="grid-column: span 2;">
+                    <a href="index.html" class="logo" style="font-size: 2rem;">Niks Blog CMS</a>
+                    <p style="color: var(--text-secondary); margin-top: 1.5rem; max-width: 350px; line-height: 1.8;">
+                        Empowering creators with a distraction-free environment to share their knowledge, design, and development stories with the world.
+                        <br><br>
+                        <i class="fas fa-map-marker-alt"></i> 123 Creator Lane, Digital City, CA 90210
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; margin-top: 2.5rem;">
+                        <a href="#" class="btn btn-glass" style="padding: 0.75rem;"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="btn btn-glass" style="padding: 0.75rem;"><i class="fab fa-github fa-lg"></i></a>
+                        <a href="#" class="btn btn-glass" style="padding: 0.75rem;"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="btn btn-glass" style="padding: 0.75rem;"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 2rem; color: white;">Site Map</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary);">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="blog.html" class="nav-link">Browse Articles</a></li>
+                        <li><a href="user/dashboard.html" class="nav-link">My Dashboard</a></li>
+                        <li><a href="admin/dashboard.html" class="nav-link">Admin Panel</a></li>
+                        <li><a href="auth/login.html" class="nav-link">Login</a></li>
+                        <li><a href="auth/register.html" class="nav-link">Join Newsletter</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 2rem; color: white;">Resources</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary);">
+                        <li><a href="#" class="nav-link">Documentation</a></li>
+                        <li><a href="#" class="nav-link">Community</a></li>
+                        <li><a href="#" class="nav-link">Marketplace</a></li>
+                        <li><a href="#" class="nav-link">Help Center</a></li>
+                        <li><a href="#" class="nav-link">API Reference</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 2rem; color: white;">Categories</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary);" id="footerCategories">
+                        <li><a href="#" class="nav-link">Technology</a></li>
+                        <li><a href="#" class="nav-link">Design</a></li>
+                        <li><a href="#" class="nav-link">Development</a></li>
+                        <li><a href="#" class="nav-link">Business</a></li>
+                        <li><a href="#" class="nav-link">Lifestyle</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 2rem; color: white;">Company</h4>
+                    <ul style="display: flex; flex-direction: column; gap: 1rem; color: var(--text-secondary);">
+                        <li><a href="#" class="nav-link">About Us</a></li>
+                        <li><a href="#" class="nav-link">Contact</a></li>
+                        <li><a href="#" class="nav-link">Privacy Policy</a></li>
+                        <li><a href="#" class="nav-link">Terms of Service</a></li>
+                        <li><a href="#" class="nav-link">Affiliate</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="border-top: 1px solid var(--glass-border); padding-top: 50px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    &copy; 2026 Niks Blog CMS Platform. Designed for the future of the web.
+                </p>
+                <div style="display: flex; gap: 2rem;">
+                    <img src="https://img.shields.io/badge/Status-Online-success" alt="Status">
+                    <img src="https://img.shields.io/badge/Uptime-99.9%25-blueviolet" alt="Uptime">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

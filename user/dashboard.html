@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | Niks Blog CMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body class="dashboard-app user-dashboard" data-theme="dark">
+    <aside class="sidebar">
+        <div class="logo" style="margin-bottom: 1rem;">My Space</div>
+        <span class="role-badge">Reader & Writer</span>
+        <nav style="flex: 1; margin-top: 1.5rem;">
+            <a href="#" class="sidebar-tab active" data-tab="overview">
+                <i class="fas fa-home"></i> Overview
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="reading">
+                <i class="fas fa-book-open"></i> Reading History
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="saved">
+                <i class="fas fa-bookmark"></i> Saved Stories
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="stories">
+                <i class="fas fa-pen-nib"></i> My Stories
+            </a>
+            <a href="#" class="sidebar-tab" data-tab="profile">
+                <i class="fas fa-user"></i> Profile
+            </a>
+        </nav>
+        <div style="border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+            <a href="../index.html" class="sidebar-link sidebar-link-website">
+                <i class="fas fa-home"></i> Main Website
+            </a>
+            <a href="../blog.html" class="sidebar-link">
+                <i class="fas fa-compass"></i> Explore Stories
+            </a>
+            <button type="button" class="sidebar-link" id="logoutBtn" style="color: #ef4444;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 id="tabTitle">Welcome back</h1>
+                <p style="color: var(--text-secondary);" id="tabSubtitle">Your personal reading and writing hub.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="../index.html" class="btn btn-glass">
+                    <i class="fas fa-home"></i> Main Website
+                </a>
+                <button class="btn btn-primary" id="createNewPost" style="display: none;">
+                    <i class="fas fa-plus"></i> Write Story
+                </button>
+            </div>
+        </header>
+
+        <!-- Overview -->
+        <div id="tab-overview" class="tab-content">
+            <div class="welcome-banner" id="welcomeBanner">
+                <h2 id="welcomeTitle">Welcome back</h2>
+                <p class="text-muted" id="welcomeMessage">Pick up where you left off or start writing something new.</p>
+            </div>
+
+            <div class="quick-actions" id="quickActions">
+                <a href="../blog.html" class="quick-action-card" style="text-decoration: none;">
+                    <i class="fas fa-compass"></i>
+                    <strong>Explore stories</strong>
+                    <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.35rem;">Discover new articles</p>
+                </a>
+                <button type="button" class="quick-action-card" data-go-tab="saved">
+                    <i class="fas fa-bookmark"></i>
+                    <strong>Saved items</strong>
+                    <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.35rem;">Your reading list</p>
+                </button>
+                <button type="button" class="quick-action-card" data-go-tab="stories">
+                    <i class="fas fa-pen-nib"></i>
+                    <strong>Write a story</strong>
+                    <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.35rem;">Publish your ideas</p>
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Stories Read</p>
+                    <div class="stat-val" id="statRead">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Saved</p>
+                    <div class="stat-val" id="statSaved">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">My Stories</p>
+                    <div class="stat-val" id="statMyPosts">0</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <p style="color: var(--text-secondary);">Total Views</p>
+                    <div class="stat-val" id="statMyViews">0</div>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem;">Continue reading</h2>
+            <div class="glass-panel" id="continueReading"></div>
+        </div>
+
+        <div id="tab-reading" class="tab-content" style="display: none;">
+            <p class="text-muted" style="margin-bottom: 1.25rem;">Articles you have opened recently.</p>
+            <div class="glass-panel" id="readingList"></div>
+        </div>
+
+        <div id="tab-saved" class="tab-content" style="display: none;">
+            <p class="text-muted" style="margin-bottom: 1.25rem;">Stories you bookmarked to read later.</p>
+            <div class="glass-panel" id="savedList"></div>
+        </div>
+
+        <div id="tab-stories" class="tab-content" style="display: none;">
+            <p class="text-muted" style="margin-bottom: 1.25rem;">Create, edit, and manage your published work.</p>
+            <div class="glass-panel">
+                <div class="post-row" style="font-weight: 600; background: var(--glass-bg);">
+                    <div>Image</div>
+                    <div>Title</div>
+                    <div>Category</div>
+                    <div>Date</div>
+                    <div>Actions</div>
+                </div>
+                <div id="myPostsList"></div>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div id="tab-profile" class="tab-content" style="display: none;">
+            <div class="glass-panel" style="padding: 2rem; max-width: 520px;">
+                <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div id="profileAvatar" style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, var(--primary)); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 800;">U</div>
+                    <div>
+                        <h2 id="profileName" style="margin-bottom: 0.25rem;">User</h2>
+                        <p id="profileEmail" style="color: var(--text-secondary);">email@example.com</p>
+                        <span class="badge" id="profileRole" style="margin-top: 0.5rem;">user</span>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+                    Manage your reading activity, saved stories, and published articles from this dashboard.
+                </p>
+                <a href="../blog.html" class="btn btn-glass"><i class="fas fa-compass"></i> Browse Stories</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Story Editor (user's own posts only) -->
+    <div class="modal" id="editorModal">
+        <div class="modal-content">
+            <div style="padding: 1rem 2rem; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <input type="text" id="editTitle" placeholder="Story Title"
+                       style="background: transparent; border: none; font-size: 1.5rem; font-weight: 700; color: white; width: 60%; min-width: 200px;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select id="editCategory" style="padding: 0.5rem; border-radius: 4px; background: var(--bg-dark); color: white;">
+                        <option>Technology</option>
+                        <option>Design</option>
+                        <option>Development</option>
+                        <option>Lifestyle</option>
+                        <option>Business</option>
+                    </select>
+                    <button class="btn btn-glass" id="closeEditor">Cancel</button>
+                    <button class="btn btn-primary" id="savePost">Publish</button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <textarea class="editor-textarea" id="markdownInput" placeholder="Write your story in markdown..."></textarea>
+                <div class="editor-preview post-content" id="markdownPreview"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script type="module" src="../js/user-dashboard.js"></script>
+</body>
+</html>
